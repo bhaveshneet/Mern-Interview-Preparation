@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import {
     registerUser,
     loginUser,
-} from "../services/authService.ts";
+} from "../services/authService";
 
 export const register = async (
     req: Request,
