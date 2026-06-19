@@ -18,17 +18,31 @@ export default function LoginPage() {
   ) => {
     e.preventDefault();
 
-    const result = await loginUser({
-      email,
-      password,
-    });
+    try {
+      const result = await loginUser({
+        email,
+        password,
+      });
 
-    dispatch(
-      setAuth({
-        user: result.user,
-        token: result.token,
-      })
-    );
+      dispatch(
+        setAuth({
+          user: result.user,
+          token: result.token,
+        })
+      );
+
+      // Store token in localStorage
+      localStorage.setItem(
+        "token",
+        result.token
+      );
+
+      alert("Login Successful");
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
   };
 
   return (
