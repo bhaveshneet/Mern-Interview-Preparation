@@ -4,9 +4,31 @@
 import { useState } from "react";
 import Link from "next/link";
 
+import { useDispatch } from "react-redux";
+import { loginUser } from "@/services/authService";
+import { setAuth } from "@/redux/slices/authSlice";
+
 export default function LoginPage() {
+
+  const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const result = await loginUser({
+      email,
+      password,
+    });
+
+    dispatch(
+      setAuth({
+        user: result.user,
+        token: result.token,
+      })
+    );
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
