@@ -2,19 +2,22 @@
 
 import { useState } from "react";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
+
 import { loginUser } from "@/services/authService";
 import { setAuth } from "@/redux/slices/authSlice";
 
 export default function LoginPage() {
+  const router = useRouter();
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] =
+    useState("");
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
+  const handleLogin = async (
+    e: React.FormEvent
   ) => {
     e.preventDefault();
 
@@ -31,13 +34,14 @@ export default function LoginPage() {
         })
       );
 
-      // Store token in localStorage
       localStorage.setItem(
         "token",
         result.token
       );
 
       alert("Login Successful");
+
+      router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -53,7 +57,7 @@ export default function LoginPage() {
         </h1>
 
         <form
-          onSubmit={handleSubmit}
+          onSubmit={handleLogin}
           className="space-y-4"
         >
           <input
