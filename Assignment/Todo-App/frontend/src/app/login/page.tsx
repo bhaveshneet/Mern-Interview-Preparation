@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -9,12 +8,14 @@ import { loginUser } from "@/services/authService";
 import { setAuth } from "@/redux/slices/authSlice";
 
 export default function LoginPage() {
-
   const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     const result = await loginUser({
@@ -37,7 +38,10 @@ export default function LoginPage() {
           Login
         </h1>
 
-        <form className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+        >
           <input
             type="email"
             placeholder="Email"
@@ -46,6 +50,7 @@ export default function LoginPage() {
             onChange={(e) =>
               setEmail(e.target.value)
             }
+            required
           />
 
           <input
@@ -56,6 +61,7 @@ export default function LoginPage() {
             onChange={(e) =>
               setPassword(e.target.value)
             }
+            required
           />
 
           <button
