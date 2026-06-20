@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 interface Todo {
@@ -19,6 +19,44 @@ export default function TodosPage() {
   const [description, setDescription] = useState("");
   const [editingId, setEditingId] =
     useState<number | null>(null);
+
+  const [loading, setLoading] =
+    useState(true);
+
+  const API_URL =
+    "http://localhost:5000/api/todos";
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const fetchTodos = async () => {
+    try {
+      const token =
+        localStorage.getItem("token");
+
+      const response = await fetch(
+        API_URL,
+        {
+          headers: {
+            Authorization:
+              "Bearer " + token,
+          },
+        }
+      );
+
+      const result =
+        await response.json();
+
+      if (result.success) {
+        setTodos(result.todos);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-8 px-4">
