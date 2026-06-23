@@ -1,48 +1,52 @@
+import { Router } from "express";
 
-
-import { Router, Request, Response, NextFunction } from "express";
+import {
+  getTodos,
+  getTodoById,
+  createTodo,
+  updateTodo,
+  deleteTodo,
+  updateTodoStatus,
+} from "../controllers/todoController";
 
 import { protect } from "../middleware/authMiddleware";
 
-import {
-  create,
-  getAll,
-  update,
-  remove,
-  toggleStatus,
-} from "../controllers/todoController";
-
-const todoValidation = (
-  _req: Request,
-  _res: Response,
-  next: NextFunction
-) => {
-  next();
-};
-
 const router = Router();
 
-router.use(protect);
+router.get(
+  "/",
+  protect,
+  getTodos
+);
 
-router.get("/", getAll);
+router.get(
+  "/:id",
+  protect,
+  getTodoById
+);
 
 router.post(
   "/",
-  todoValidation,
-  create
+  protect,
+  createTodo
 );
 
 router.put(
   "/:id",
-  todoValidation,
-  update
+  protect,
+  updateTodo
 );
 
-router.delete("/:id", remove);
+router.delete(
+  "/:id",
+  protect,
+  deleteTodo
+);
 
 router.patch(
   "/:id/status",
-  toggleStatus
+  protect,
+  updateTodoStatus
 );
 
 export default router;

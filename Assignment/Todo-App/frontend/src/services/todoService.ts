@@ -1,20 +1,10 @@
+import axios from "axios";
 
-
-const API_URL =
-  "http://localhost:5000/api/todos";
-
-export const getTodos = async (
-  token: string
-) => {
-  const response = await fetch(
-    API_URL,
-    {
-      headers: {
-        Authorization:
-          "Bearer " + token,
-      },
-    }
+export const createTodo = async (data: any) => {
+  const response = await axios.post(
+    "http://localhost:5000/api/todos",
+    data
   );
 
-  return response.json();
+  return response.data;
 };

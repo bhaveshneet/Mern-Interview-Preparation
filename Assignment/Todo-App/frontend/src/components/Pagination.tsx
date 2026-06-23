@@ -1,11 +1,9 @@
-
+"use client";
 
 interface Props {
   currentPage: number;
   totalPages: number;
-  setCurrentPage: (
-    page: number
-  ) => void;
+  setCurrentPage: (page: number) => void;
 }
 
 export default function Pagination({
@@ -14,34 +12,23 @@ export default function Pagination({
   setCurrentPage,
 }: Props) {
   return (
-    <div className="flex justify-center gap-4 p-5">
+    <div className="flex items-center justify-center gap-4 mt-6">
       <button
-        onClick={() =>
-          setCurrentPage(
-            currentPage - 1
-          )
-        }
+        onClick={() => setCurrentPage(currentPage - 1)}
         disabled={currentPage === 1}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
+        className="px-6 py-2 rounded-lg bg-blue-600 text-white disabled:opacity-50"
       >
         Previous
       </button>
 
-      <span>
-        Page {currentPage} of{" "}
-        {totalPages}
+      <span className="font-semibold">
+        Page {currentPage} of {totalPages}
       </span>
 
       <button
-        onClick={() =>
-          setCurrentPage(
-            currentPage + 1
-          )
-        }
-        disabled={
-          currentPage === totalPages
-        }
-        className="bg-green-600 text-white px-4 py-2 rounded"
+        onClick={() => setCurrentPage(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className="px-6 py-2 rounded-lg bg-blue-600 text-white disabled:opacity-50"
       >
         Next
       </button>
